@@ -1,0 +1,71 @@
+.blog_section .blogs{
+    background-color: transparent;
+    transition: all 0.5s;
+}
+
+.blog_nav{
+    z-index: 10;
+}
+.blogs .card-body h5{
+    font-size: 1rem;
+}
+.blogs .card-body h6{
+    font-size: 0.85rem;
+}
+.blogs .card_image{
+    height:max-content;
+    object-fit: cover;
+}
+.blogs .blog_more{
+    width: 1.2rem;
+}
+.blogs .image_holder{
+    border-radius: 15px;
+    height:10rem;
+}
+.blogs .card .card-body{
+    min-height: 100%;
+}
+.search_section .card{
+    height: 20rem;
+}
+.search_section .image_holder{
+    height:20rem;
+}
+.default_section .card{
+    height:20rem;
+}
+.default_section .image_holder{
+    height:20rem;
+}
+.share{
+    z-index: 10;
+    width: fit-content;
+    height: fit-content;
+    display: grid;
+    place-items: center;
+}
+
+@media screen and (min-width:1200px) {
+    .default_section .card{
+        height:20rem;
+    }
+    .default_section .image_holder{
+        height:20rem;
+    }
+
+}
+
+@media screen and (max-width:576px) {
+    .blog_section .blogs{
+        max-width:30rem;
+        height:30rem;
+    }
+    .blogs .image_holder{
+        height:15rem;
+    }
+    .blogs .card_image{
+        height: 15rem;
+    }
+
+}

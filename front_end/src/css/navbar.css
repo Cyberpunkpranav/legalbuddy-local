@@ -1,0 +1,65 @@
+.navbar{
+    border-radius:20px ;
+    z-index: 20;
+}
+.navbar .login{
+    border:1px solid var(--blue2);
+    border-radius: 5px;
+    color:var(--blue2) !important;
+    font-weight: 600;
+}
+.navbar .logo{
+    width: 10rem;
+}
+.slider .btn-close{
+    z-index: 2;
+}
+.slider .sidebar_logo{
+    width:10rem;
+}
+.slider{
+    height: max-content;
+    top: 0;
+    right: 0;
+    width:max-content;
+    z-index: 99;
+    transition: all 0.3s;
+}
+
+.nav-item .nav-link {
+    color: rgb(71, 69, 69);
+}
+.navbar-nav .nav-link.active{
+    color: var(--blue1);
+    font-weight: 600;
+}
+.navbar-toggler-icon{
+    border-radius:10px;
+    background-image: url('../../public/images/menu.png');
+}
+.navbar-toggler:focus{
+    outline: 0;
+    box-shadow: none;
+}
+
+@media screen and (max-width:375px) {
+    .navbar-brand span{
+        font-size: 1rem;
+    }
+    .slider{
+        width:90%;
+    }
+    .slider span{
+        font-size: 1rem;
+    }
+    .slider .icons{
+        width:1rem;
+    }
+    .slider .btn{
+        padding: 0.2rem;
+        font-size:0.75rem;
+    }
+    .slider .admin_settings,.login,.signup{
+        font-size: 0.75rem;
+    }
+}

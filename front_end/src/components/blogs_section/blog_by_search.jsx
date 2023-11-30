@@ -78,7 +78,7 @@ const Blog_by_search = (props) => {
                       <div className="overflow-hidden image_holder">
                     {
                       data.image ? (
-                        <img src={image_path + data.image} className="card-img-top card_image" alt="..."/>
+                        <img src={process.env.REACT_APP_IMAGE_PATH + data.image} className="card-img-top card_image" alt="..."/>
     
                       ):(
                         <img src={process.env.PUBLIC_URL + '/images/no_image.png'} className="card-img-top card_image" alt="..."/>

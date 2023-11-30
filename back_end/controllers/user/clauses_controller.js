@@ -15,7 +15,7 @@ export const Get_Clauses = (req,res,next)=>{
     VerifyToken(token,req,res,next)
     let query;
     if(req.query.search !=undefined){
-     query = `SELECT * from clauses WHERE clause_name LIKE "%${req.query.search}%" AND status=1 LIMIT ? OFFSET ? `
+     query = `SELECT * from public_clauses WHERE clause_name LIKE "%${req.query.search}%" AND status=1 LIMIT ? OFFSET ? `
      db.query(query,[limit,offset],((err,result)=>{
         if(err){
             next(err)
@@ -27,7 +27,7 @@ export const Get_Clauses = (req,res,next)=>{
         }
     }))
     }else{
-        query = `SELECT * from clauses AND status = 1 ORDER BY id LIMIT ? OFFSET ? `
+        query = `SELECT * from public_clauses AND status = 1 ORDER BY id LIMIT ? OFFSET ? `
         db.query(query,[limit,offset],((err,result)=>{
             if(err){
                 next(err)
@@ -43,7 +43,7 @@ export const Get_Clauses = (req,res,next)=>{
 }
 async function Get_clause_By_id_helper(id,res){
 return  new Promise((resolve,reject)=>{
-   let query = `SELECT * FROM clause_alternates WHERE clause_alternates.clause_id=?`
+   let query = `SELECT * FROM public_clause_alternates WHERE public_clause_alternates.clause_id=?`
     db.query(query,[id],((err,result)=>{
         if(err){
             res.json(err)   
@@ -88,7 +88,7 @@ export const Get_Clause_by_Id =async(req,res,next)=>{
         status:'',
     }
     try {
-        query = `SELECT clause_name,definition FROM clauses WHERE id = ?`
+        query = `SELECT clause_name,definition FROM public_clauses WHERE id = ?`
             db.query(query,[id],((err,result)=>{
             if(err){
                 next(err)

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import {GoogleOAuthProvider,GoogleLogin } from '@react-oauth/google';
 import jwt_decode from 'jwt-decode';
@@ -12,7 +12,6 @@ import '../css/navbar.css'
 
 const Navbar = () => {
   const navigate = useNavigate()
-  const [popup,setpopup]=useState('block')
   const[load,setload]=useState(false)
   const logout = ()=>{
     Cookies.remove('accessToken')
@@ -20,7 +19,9 @@ const Navbar = () => {
     Cookies.remove('username')
     Cookies.remove('blog_view')
     toast.success('Logged out')
-    window.location.reload()
+    setTimeout(() => {
+      navigate('/Login')
+    }, 1000);
   }
  
   const responseMessage = async(response) => {
@@ -59,18 +60,6 @@ const errorMessage = (error) => {
   toast.error(error);
 } 
 
-
-const toggle_popup=()=>{
-if(popup=='none'){
-  setpopup('block')
-}
-if(popup=='block'){
-  setpopup('none')
-}
-}
-
-
-  // console.log(userData) 
   return (
     <>
     <nav className="navbar mx-5 mt-2 position-sticky start-0 end-0 shadow-sm px-3 top-0 bg-white navbar-expand-lg">

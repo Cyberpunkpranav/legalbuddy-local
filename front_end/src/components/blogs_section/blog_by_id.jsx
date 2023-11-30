@@ -49,7 +49,7 @@ const View_Blog = () => {
             viewblog !==undefined?(
               <div className="container-fluid">
               <h2 className='text-dark mb-4'>{viewblog.title}</h2>
-              <img className='img-fluid blog_image' src={image_path+viewblog.image}/>
+              <img className='img-fluid blog_image' src={process.env.REACT_APP_IMAGE_PATH+viewblog.image}/>
               <h6 className='text-gray2 my-4'> {formatted_date(viewblog.created_on)}</h6>
               <h4 className='text-dark my-4'>{viewblog.description}</h4>
               <p className='my-4' dangerouslySetInnerHTML={{__html:viewblog.content}}></p>
@@ -72,7 +72,7 @@ const View_Blog = () => {
                   <div className="overflow-hidden image_holder">
                   {
                     data.image ? (
-                      <img src={image_path + data.image} className="card-img-top card_image" alt="..."/>
+                      <img src={process.env.REACT_APP_IMAGE_PATH + data.image} className="card-img-top card_image" alt="..."/>
   
                     ):(
                       <img src={process.env.PUBLIC_URL + '/images/no_image.png'} className="card-img-top card_image" alt="..."/>

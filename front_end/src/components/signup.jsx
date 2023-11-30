@@ -59,14 +59,14 @@ const Signup = async()=>{
       setload(true)
     await axios.post(`/api/user/signup`,creds).then((response)=>{
         if(response.data.status==true){
-          let user_id = encryptNumber(response.data.data.id)
-          let username = encryptNumber(response.data.data.username)
-          Cookies.set('accessToken',response.data.access_token)
-          Cookies.set('user_id',user_id)
-          Cookies.set('username',username)
+          // let user_id = encryptNumber(response.data.data.id)
+          // let username = encryptNumber(response.data.data.username)
+          // Cookies.set('accessToken',response.data.access_token)
+          // Cookies.set('user_id',user_id)
+          // Cookies.set('username',username)
           toast.success(response.data.message);
           setTimeout(() => {
-            navigate('/')
+            navigate('/Login')
           }, 1000);
         }else{
           toast.error(response.data.message);

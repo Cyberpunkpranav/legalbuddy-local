@@ -26,7 +26,7 @@ app.use('/clauses', express.static('assets/clauses'));
 // app.use('/uploads',express.static('E:/Aartas Tech/Pranav Sharma/legal_buddy/back_end/assets/blog_images'))
 // console.log(path.join(__dirname, 'assets','blog_images'));
 app.use(cors())
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors({ origin: process.env.REACT_APP_URL }));
 dotenv.config() 
 app.use(bodyParser.json({ limit: '100mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '100mb' }));

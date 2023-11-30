@@ -16,7 +16,7 @@ const currentDir = dirname(fileURLToPath(import.meta.url));
 export const Create_clause = async(req,res,next)=>{
   const token = req.headers.authorization;
   VerifyToken(token,req,res,next)
-  const query = 'INSERT into clauses (`clause_name`,`definition`) VALUES (?,?)'
+  const query = 'INSERT into public_clauses (`clause_name`,`definition`) VALUES (?,?)'
   db.query(query,[req.body.clause_name,req.body.definition],((err,result)=>{
     if(err){
       next(err)
@@ -37,7 +37,7 @@ export const Get_Clauses = (req,res,next)=>{
     VerifyToken(token,req,res,next)
     let query;
     if(req.query.search !=undefined){
-     query = `SELECT * from clauses WHERE clause_name LIKE "%${req.query.search}%" LIMIT ? OFFSET ? `
+     query = `SELECT * from public_clauses WHERE clause_name LIKE "%${req.query.search}%" LIMIT ? OFFSET ? `
      db.query(query,[limit,offset],((err,result)=>{
         if(err){
             res.json(err)
@@ -49,7 +49,7 @@ export const Get_Clauses = (req,res,next)=>{
         }
     }))
     }else{
-        query = `SELECT * from clauses ORDER BY id LIMIT ? OFFSET ? `
+        query = `SELECT * from public_clauses ORDER BY id LIMIT ? OFFSET ? `
         db.query(query,[limit,offset],((err,result)=>{
             if(err){
                 next(err)
@@ -66,7 +66,7 @@ export const Get_Clauses = (req,res,next)=>{
 async function Get_clause_by_id_helper(id,res) {
     // Replace this with your actual query logic
     return new Promise((resolve, reject) => {
-       let query = `SELECT * FROM clause_alternates WHERE clause_alternates.clause_id=?`
+       let query = `SELECT * FROM public_clause_alternates WHERE public_clause_alternates.clause_id=?`
         db.query(query,[id],((err,result)=>{
             if(err){
                 res.json(err)
@@ -102,7 +102,7 @@ export const Get_Clause_by_Id = async (req,res,next)=>{
         const id = Number(req.query.id)
         const token = req.headers.authorization;
         VerifyToken(token,req,res,next)
-        query = `SELECT * FROM clauses WHERE id = ?`
+        query = `SELECT * FROM public_clauses WHERE id = ?`
         try {
            db.query(query,[id],((err,result)=>{
             if(err){
@@ -125,8 +125,8 @@ async function  Update_clause_helper(id,rationale,clause,status,clause_filepath,
     // Replace this with your actual query logic
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        let query ='UPDATE clause_alternates SET rationale=?, file_name=?,file_path=? ,status = ? WHERE id = ?';
-        db.query(query, [rationale, filename, clause_filepath, status, id],((err,result)=>{
+        let query ='UPDATE public_clause_alternates SET rationale=?, file_name=? ,status = ? WHERE id = ?';
+        db.query(query, [rationale, filename, status, id],((err,result)=>{
            if(err){
                res.json(err)
            }else{   
@@ -146,7 +146,7 @@ export const Update_Clause = async (req, res,next) => {
     VerifyToken(token,req,res,next)
 
     try {
-      let query = 'UPDATE clauses SET clause_name = ?, definition = ?  WHERE id = ?';
+      let query = 'UPDATE public_clauses SET clause_name = ?, definition = ?  WHERE id = ?';
        db.query(query, [clause_name, definition, Id]);
   
       for (let i = 0; i < clauses.length; i++) {
@@ -156,8 +156,7 @@ export const Update_Clause = async (req, res,next) => {
         let clause = clauses[i].clause;
         let status = clauses[i].status;
         let paths = join(currentDir, '..', '..', 'assets', 'clauses', filename);
-        let clause_filepath = process.env.FILEPATH + '/clauses/' + filename;
-        await Update_clause_helper(id,rationale,clause,status,clause_filepath,paths,filename,res)
+        await Update_clause_helper(id,rationale,clause,status,paths,filename,res)
       }
       res.json({
         data: '',
@@ -178,16 +177,15 @@ export const Add_Clause_alternates  = async(req,res,next)=>{
     const token = req.headers.authorization;
     VerifyToken(token,req,res,next)
 
-    let query ='INSERT into clause_alternates (`clause_id`,`rationale`,`status`) VALUES (?,?,?)';
+    let query ='INSERT into public_clause_alternates (`clause_id`,`rationale`,`status`) VALUES (?,?,?)';
     db.query(query, [clause_id,rationale, status],((err,result)=>{
        if(err){
            next(err)
        }else{   
         const filename = clause_name+'_'+result.insertId
         const paths = join(currentDir, '..', '..', 'assets', 'clauses', filename);
-        const clause_filepath = process.env.FILEPATH + '/clauses/' + filename; 
-        const updateQuery = 'UPDATE clause_alternates SET file_name = ? , file_path = ? WHERE id = ?';
-          db.query(updateQuery,[filename,clause_filepath,result.insertId],((err,result)=>{
+        const updateQuery = 'UPDATE public_clause_alternates SET file_name = ? WHERE id = ?';
+          db.query(updateQuery,[filename,result.insertId],((err,result)=>{
             if(err){
               next(err)
             }else{

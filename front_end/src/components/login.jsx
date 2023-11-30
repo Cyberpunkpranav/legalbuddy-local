@@ -42,7 +42,6 @@ const Login = () => {
               setTimeout(() => {
                 navigate('/')
               }, 1000);
-            
             }else{
               toast.error(response.data.message);
             }
@@ -68,8 +67,10 @@ const Login = () => {
             if(response.data.status){
               toast.success(response.data.message);
               let user_id = encryptNumber(response.data.data.id)
+              let username = encryptString(response.data.data.username)
               Cookies.set('accessToken',response.data.access_token)
               Cookies.set('user_id',user_id)
+              Cookies.set('username',username)
               setTimeout(() => {
                 navigate('/')
               }, 1000);
@@ -82,7 +83,7 @@ const Login = () => {
           setload(false)
           toast.error(e.message);
         }
-    }
+            }
   return (
     <div className="container mainapp align-items-center d-flex justify-content-center">
     <div className="row align-items-center p-0 m-0">

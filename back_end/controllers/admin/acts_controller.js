@@ -16,7 +16,7 @@ export const Acts_list = (req,res,next)=>{
 
     try {
         if(search != undefined){
-            const query = `SELECT * FROM acts WHERE act LIKE "%${search}%" `
+            const query = `SELECT * FROM mca_acts WHERE act LIKE "%${search}%" `
             db.query(query,((err,result)=>{
                 if(err){
                     next(err)
@@ -29,7 +29,7 @@ export const Acts_list = (req,res,next)=>{
                 }
             }))
         }else{
-            const query = `SELECT * FROM acts`
+            const query = `SELECT * FROM mca_acts`
             db.query(query,((err,result)=>{
                 if(err){
                     next(err)
@@ -57,7 +57,7 @@ export const Add_Act=(req,res,next)=>{
     const token = req.headers.authorization;
     VerifyToken(token,req,res,next)
 
-    const query = 'INSERT INTO acts (`act`,`description`,`act_number`,`act_year`,`amendment`,`status`) VALUES(?,?,?,?,?,?)'
+    const query = 'INSERT INTO mca_acts (`act`,`description`,`act_number`,`act_year`,`amendment`,`status`) VALUES(?,?,?,?,?,?)'
     try {
         db.query(query,[act,description,act_number,act_year,amendment,status],((err,result)=>{
             if(err){
@@ -68,7 +68,7 @@ export const Add_Act=(req,res,next)=>{
                 }
                 try {
                     const Token =  jwt.sign(token_data,'act_token')
-                    const query2 = 'Update acts set token = ? WHERE id=? '
+                    const query2 = 'Update mca_acts set token = ? WHERE id=? '
                     db.query(query2,[Token,result.insertId],((err,result)=>{
                         if(err){
                             next(err)
@@ -105,7 +105,7 @@ export const Update_Act = (req,res,next)=>{
         id:id
     }
     const Token =  jwt.sign(token_data,'act_token')
-    const query = 'UPDATE acts SET act=?,description=?,act_number=?,act_year =?,amendment=?,status=?,token=? WHERE id=?'
+    const query = 'UPDATE mca_acts SET act=?,description=?,act_number=?,act_year =?,amendment=?,status=?,token=? WHERE id=?'
     try {
         db.query(query,[act,description,act_number,act_year,amendment,status,Token,id],((err,result)=>{
             if(err){
@@ -127,7 +127,7 @@ export const Act_by_Id = (req,res,next)=>{
     const token = req.headers.authorization;
     VerifyToken(token,req,res,next)
     
-    const query = 'SELECT * FROM acts WHERE id = ?'
+    const query = 'SELECT * FROM mca_acts WHERE id = ?'
       db.query(query,[id],(err,result)=>{
         if(err){
           next(err)

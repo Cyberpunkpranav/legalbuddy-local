@@ -14,7 +14,7 @@ export const GetActs = (req,res,next)=>{
     VerifyToken(token,req,res,next)
     if(req.query.search !== undefined){
         try {
-            const query = `SELECT * from acts WHERE act LIKE "%${search}%" AND status=1 ORDER BY created_on asc`
+            const query = `SELECT * from mca_acts WHERE act LIKE "%${search}%" AND status=1 ORDER BY created_on asc`
             db.query(query,(err,result)=>{
                 if(err){
                     next(err)
@@ -31,7 +31,7 @@ export const GetActs = (req,res,next)=>{
         }
     }else{
         try {
-            const query = `SELECT * from acts WHERE status=1 ORDER BY created_on asc `
+            const query = `SELECT * from mca_acts WHERE status=1 ORDER BY created_on asc `
             db.query(query,(err,result)=>{
                 if(err){
                     next(err)
@@ -58,7 +58,7 @@ export const GetChapters = (req,res,next)=>{
     if(act_id){
     if(req.query.search !== undefined){
         try {
-            const query = `SELECT * from chapters WHERE chapter LIKE "%${search}%" AND status=1 AND act_id= ? ORDER BY created_on asc`
+            const query = `SELECT * from mca_chapters WHERE chapter LIKE "%${search}%" AND status=1 AND act_id= ? ORDER BY created_on asc`
             db.query(query,[act_id],(err,result)=>{
                 if(err){
                     next(err)
@@ -75,7 +75,7 @@ export const GetChapters = (req,res,next)=>{
         }
     }else{
         try {
-            const query = `SELECT * from chapters WHERE status=1 AND act_id = ? ORDER BY created_on asc `
+            const query = `SELECT * from mca_chapters WHERE status=1 AND act_id = ? ORDER BY created_on asc `
             db.query(query,[act_id],(err,result)=>{
                 if(err){
                     next(err)
@@ -109,7 +109,7 @@ export const GetSections = (req,res,next)=>{
     if(act_id&&chapter_id){
     if(req.query.search !== undefined){
         try {
-            const query = `SELECT * from sections WHERE section LIKE "%${search}%" AND status=1 AND act_id= ? AND chapter_id =? ORDER BY created_on asc`
+            const query = `SELECT * from mca_sections WHERE section LIKE "%${search}%" AND status=1 AND act_id= ? AND chapter_id =? ORDER BY created_on asc`
             db.query(query,[act_id,chapter_id],(err,result)=>{
                 if(err){
                     next(err)
@@ -126,7 +126,7 @@ export const GetSections = (req,res,next)=>{
         }
     }else{
         try {
-            const query = `SELECT * from chapters WHERE status=1 AND act_id = ? AND chapter_id = ? ORDER BY created_on asc `
+            const query = `SELECT * from mca_chapters WHERE status=1 AND act_id = ? AND chapter_id = ? ORDER BY created_on asc `
             db.query(query,[act_id,chapter_id],(err,result)=>{
                 if(err){
                     next(err)
@@ -160,7 +160,7 @@ export const GetSubSections = (req,res,next)=>{
 
     if(act_id&&chapter_id&&section_id){
         try {
-            const query = `SELECT * from subsections WHERE status=1 AND act_id = ? AND chapter_id = ? AND section_id = ? ORDER BY created_on asc `
+            const query = `SELECT * from mca_subsections WHERE status=1 AND act_id = ? AND chapter_id = ? AND section_id = ? ORDER BY created_on asc `
             db.query(query,[act_id,chapter_id,section_id],(err,result)=>{
                 if(err){
                     next(err)
@@ -194,7 +194,7 @@ export const GetClauses = (req,res,next)=>{
 
     if(act_id&&chapter_id&&section_id){
         try {
-            const query = `SELECT * FROM subsection_clauses WHERE status=1 AND act_id = ? AND chapter_id = ? AND section_id = ? ORDER BY created_on asc `
+            const query = `SELECT * FROM mca_clauses WHERE status=1 AND act_id = ? AND chapter_id = ? AND section_id = ? ORDER BY created_on asc `
             db.query(query,[act_id,chapter_id,section_id],(err,result)=>{
                 if(err){
                     next(err)
@@ -228,7 +228,7 @@ export const GetSubClauses = (req,res,next)=>{
 
     if(act_id&&chapter_id&&section_id){
         try {
-            const query = `SELECT * FROM clause_subclauses WHERE status=1 AND act_id = ? AND chapter_id = ? AND section_id = ? ORDER BY created_on asc `
+            const query = `SELECT * FROM mca_subclauses WHERE status=1 AND act_id = ? AND chapter_id = ? AND section_id = ? ORDER BY created_on asc `
             db.query(query,[act_id,chapter_id,section_id],(err,result)=>{
                 if(err){
                     next(err)

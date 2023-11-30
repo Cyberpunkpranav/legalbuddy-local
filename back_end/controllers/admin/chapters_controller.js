@@ -19,7 +19,7 @@ export const Chapters_By_Act = (req,res,next)=>{
     try {
         if(act_id){
             if(search !== undefined){
-            let query = `SELECT * FROM chapters WHERE chapter LIKE "%${search}%" AND act_id = ?`
+            let query = `SELECT * FROM mca_chapters WHERE chapter LIKE "%${search}%" AND act_id = ?`
                 db.query(query,[act_id],((err,result)=>{
                     if(err){
                         next(err)
@@ -32,7 +32,7 @@ export const Chapters_By_Act = (req,res,next)=>{
                     }
                 }))
             }else{
-            let query = `SELECT * FROM chapters WHERE act_id = ?`
+            let query = `SELECT * FROM mca_chapters WHERE act_id = ?`
             db.query(query,[act_id],((err,result)=>{
                 if(err){
                     next(err)
@@ -66,7 +66,7 @@ const token = req.headers.authorization;
 VerifyToken(token,req,res,next)
 
 if(act_id){
-    const query = 'INSERT into chapters (`act_id`,`chapter_number`,`chapter_part`,`chapter`) VALUES(?,?,?,?)'
+    const query = 'INSERT into mca_chapters (`act_id`,`chapter_number`,`chapter_part`,`chapter`) VALUES(?,?,?,?)'
     db.query(query,[act_id,chapter_number,chapter_part,chapter],(err,result)=>{
         if(err){
             next(err)
@@ -77,7 +77,7 @@ if(act_id){
             }
             try {
                 const Token =  jwt.sign(token_data,'chapter_token')
-                const query2 = 'Update chapters set token = ? WHERE id=? '
+                const query2 = 'Update mca_chapters set token = ? WHERE id=? '
                 db.query(query2,[Token,result.insertId],((err,result)=>{
                     if(err){
                         next(err)
@@ -116,7 +116,7 @@ export const Update_Chapter = (req,res,next)=>{
     }
     const Token =  jwt.sign(token_data,'chapter_token')
       try {
-        const query = 'UPDATE chapters SET act_id=?, chapter_number = ? ,chapter_part = ?, chapter = ?, token = ? WHERE id = ?'
+        const query = 'UPDATE mca_chapters SET act_id=?, chapter_number = ? ,chapter_part = ?, chapter = ?, token = ? WHERE id = ?'
         db.query(query,[act_id,chapter_number,chapter_part,chapter,Token,id],(err,result)=>{
           if(err){
             next(err)
